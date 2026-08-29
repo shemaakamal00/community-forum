@@ -1,5 +1,5 @@
 --Användare
-CREATE TABLE users(
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `groups` (
     description TEXT,
     created_by INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (created_by) REFERENCES users(id)
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT
 );
 
 
@@ -25,10 +25,10 @@ CREATE TABLE memberships (
     user_id INT NOT NULL,
     group_id INT NOT NULL,
     role ENUM('member', 'admin') NOT NULL DEFAULT 'member',
-    status ENUM('pending', 'approved') NOT NULL DEFAULT 'pending',
+    status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (group_id) REFERENCES `groups`(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES `groups`(id) ON DELETE CASCADE,
     UNIQUE (user_id, group_id)
 );
 
@@ -39,8 +39,8 @@ CREATE TABLE topics (
     title VARCHAR(255) NOT NULL,
     created_by INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (group_id) REFERENCES `groups`(id),
-    FOREIGN KEY (created_by) REFERENCES users(id)
+    FOREIGN KEY (group_id) REFERENCES `groups`(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT
 );
 
 -- Inlägg under ett ämne
@@ -50,8 +50,8 @@ CREATE TABLE posts (
     user_id INT NOT NULL,
     body TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (topic_id) REFERENCES topics(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (topic_id) REFERENCES topics(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
 -- Inbjudningslänkar (för att bjuda in användare till grupper)
@@ -62,6 +62,8 @@ CREATE TABLE invites (
     created_by INT NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     used_at TIMESTAMP NULL,
-    FOREIGN KEY (group_id) REFERENCES `groups`(id),
-    FOREIGN KEY (created_by) REFERENCES users(id)
+    used_by INT NULL,
+    FOREIGN KEY (group_id) REFERENCES `groups`(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (used_by) REFERENCES users(id) ON DELETE SET NULL
 );
