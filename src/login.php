@@ -1,6 +1,6 @@
 <?php
-require 'db.php';
-require 'helpers.php';
+require_once 'db.php';
+require_once 'helpers.php';
 
 $error = '';
 $notice = isset($_GET['registered']) ? 'Konto skapat! Logga in nedan.' : '';

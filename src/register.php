@@ -1,7 +1,7 @@
 <?php
 
-require 'db.php';
-require 'helpers.php';
+require_once 'db.php';
+require_once 'helpers.php';
 
 $error = '';
 
