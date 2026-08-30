@@ -105,6 +105,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $notice = 'Rollen har uppdaterats!';
         }
     }
+
+    elseif ($formType === 'create_invite') {
+        if (!$isAdmin) {
+            http_response_code(403);
+            exit('Endast administratörer får skapa inbjudningar.');
+        }
+
+        $token = bin2hex(random_bytes(32));
+
+        $expiresAt = date('Y-m-d H:i:s', time() + 24 * 60 * 60);
+
+        $stmt = $pdo->prepare(
+            "INSERT INTO invites (group_id, token, created_by, expires_at)
+            VALUES (?, ?, ?, ?)"
+        );
+        $stmt->execute([$groupId, $token, $userId, $expiresAt]);
+
+        $notice= 'Inbjudningslänk skapad (giltig i 24h, kan endast användas en gång).';
+        $inviteLink = 'http://localhost:8080/invite.php?token=' . $token;
+    }
 }
 
 $pending = [];
@@ -200,6 +220,19 @@ require 'header.php';
                 </li>
             <?php endforeach; ?>
             </ul>
+        <?php endif; ?>
+
+        <h2>Inbjudningslänk</h2>
+        <form method="post">
+            <?= csrf_field() ?>
+            <input type="hidden" name="form_type" value="create_invite">
+            <button type="submit">Skapa engångslänk (giltig 24h)</button>
+        </form>
+
+        <?php if(!empty($inviteLink)): ?>
+            <p>Kopiera och dela denna länk: </p>
+            <input type="text" value="<?= e($inviteLink) ?>" readonly
+            style="width:100%; max-width:600px;" onclick="this.select()">
         <?php endif; ?>
     <?php endif; ?>
 
