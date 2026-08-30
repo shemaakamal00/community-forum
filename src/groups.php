@@ -49,12 +49,10 @@ $stmt = $pdo->prepare(
 );
 $stmt->execute([$userId]);
 $otherGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$pageTitle = 'Grupper';
+require 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="utf-8"><title>Grupper</title></head>
-<body>
-    <?= nav() ?>
     <h1>Grupper</h1>
 
     <?php if ($notice): ?><p style="color:green;"><?= e($notice) ?></p><?php endif; ?>
@@ -97,5 +95,4 @@ $otherGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><strong><?= e($g['name']) ?></strong> — <em>ansökan väntar på godkännande</em></li>
     <?php endforeach; ?>
     </ul>
-</body>
-</html>
+<?php require 'footer.php'; ?>

@@ -39,6 +39,8 @@ if ($_SERVER ['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$pageTitle = 'Skapa konto'; 
+require 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="sv">
@@ -60,5 +62,4 @@ if ($_SERVER ['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <p>Har du redan ett konto? <a href="login.php">Logga in</a></p>
-    </body>
-</html>
+<?php require 'footer.php'; ?>

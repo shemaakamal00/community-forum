@@ -25,11 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Fel e-post eller lösenord.';
     }
 }
+$pageTitle = 'Logga in'; 
+require 'header.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="utf-8"><title>Logga in</title></head>
-<body>
     <h1>Logga in</h1>
 
     <?php if ($notice): ?><p style="color:green;"><?= e($notice) ?></p><?php endif; ?>
@@ -43,5 +41,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <p>Inget konto? <a href="register.php">Skapa ett här</a></p>
-</body>
-</html>
+<?php require 'footer.php'; ?>

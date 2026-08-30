@@ -109,12 +109,9 @@ $stmt = $pdo->prepare(
 $stmt->execute([$groupId]);
 $topics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$pageTitle = $membership['name'];
+require 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="utf-8"><title><?= e($membership['name']) ?></title></head>
-<body>
-    <?= nav() ?>
     <h1><?= e($membership['name']) ?></h1>
     <p><?= e($membership['description'] ?? '') ?></p>
     <p>Din roll: <strong><?= e($membership['role']) ?></strong></p>
@@ -169,5 +166,4 @@ $topics = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p><textarea name="body" placeholder="Ditt första inlägg"></textarea></p>
         <p><button type="submit">Skapa diskussion</button></p>
     </form>
-</body>
-</html>
+<?php require 'footer.php'; ?>

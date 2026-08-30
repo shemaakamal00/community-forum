@@ -39,14 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-?>
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="utf-8"><title>Skapa grupp</title></head>
-<body>
-    <?= nav() ?>
-    <h1>Skapa en ny grupp</h1>
 
+$pageTitle = 'Skapa grupp';
+require 'header.php';
+?>
+    <h1>Skapa en ny grupp</h1>
     <?php if ($error): ?><p style="color:red;"><?= e($error) ?></p><?php endif; ?>
     
     <form method="post">
@@ -55,5 +52,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p><textarea name="description" placeholder="Vad diskuteras i gruppen?"></textarea></p>
         <p><button type="submit">Skapa grupp</button></p>
     </form>
-</body>
-</html>
+<?php require 'footer.php'; ?>
