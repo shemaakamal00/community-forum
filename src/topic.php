@@ -62,34 +62,33 @@ $stmt = $pdo->prepare(
 );
 $stmt->execute([$topicId]);
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$pageTitle = $topic['title'];
+require 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="utf-8"><title><?= e($topic['title']) ?></title></head>
-<body>
-    <?= nav() ?>
 
     <p><a href="group.php?id=<?= (int)$topic['group_id'] ?>">&larr; Tillbaka till <?= e($topic['group_name']) ?></a></p>
 
     <h1><?= e($topic['title']) ?></h1>
 
-    <?php if ($notice): ?><p style="color:red;"><?= e($notice) ?></p><?php endif; ?>
+    <?php if ($notice): ?><p class="error"><?= e($notice) ?></p><?php endif; ?>
 
     <?php foreach ($posts as $p): ?>
-        <div style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
-            <p><?= nl2br(e($p['body'])) ?></p>
-            <small>
+        <div class="post">
+            <?= nl2br(e($p['body'])) ?>
+            <div class="meta">
                 <?= e($p['first_name'] . ' ' . $p['last_name']) ?>
                 &middot; <?= e($p['created_at']) ?>
-            </small>
+            </div>
         </div>
     <?php endforeach; ?>
 
     <h3>Svara</h3>
-    <form method="post">
-        <?= csrf_field() ?>
-        <p><textarea name="body" placeholder="Skriv ett svar"></textarea></p>
-        <p><button type="submit">Skicka svar</button></p>
-    </form>
-</body>
-</html>
+    <div class="card">
+        <form method="post">
+            <?= csrf_field() ?>
+            <p><textarea name="body" placeholder="Skriv ett svar"></textarea></p>
+            <p><button type="submit">Skicka svar</button></p>
+        </form>
+    </div>
+<?php require 'footer.php'; ?>

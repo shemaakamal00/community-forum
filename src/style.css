@@ -1,0 +1,309 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --width: 900px;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #eef2f4;
+  color: #26333b;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+nav.topbar {
+  background: #2f4858;
+}
+
+nav.topbar .nav-inner {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 14px;
+}
+
+nav.topbar .brand a {
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav.topbar .nav-links {
+  display: flex;
+  gap: 18px;
+}
+
+nav.topbar a {
+  color: #cdd9e0;
+  text-decoration: none;
+}
+
+nav.topbar a:hover {
+  color: #fff;
+}
+
+nav.topbar .right {
+  margin-left: auto;
+  color: #9fb2be;
+}
+
+nav.topbar .right a {
+  color: #cdd9e0;
+}
+
+.container {
+  max-width: var(--width);
+  margin: 28px auto;
+  padding: 0 20px;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2f4858;
+  margin: 0 0 4px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4a6072;
+  margin: 28px 0 12px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a6072;
+  margin: 22px 0 10px;
+}
+
+.lead {
+  font-size: 17px;
+  color: #4a6072;
+  max-width: 620px;
+  margin: 8px 0 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #d3dbe0;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.home-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #d3dbe0;
+  border-radius: 8px;
+  padding: 18px 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s;
+}
+
+.home-card:hover {
+  border-color: #2f4858;
+}
+
+.home-card h3 {
+  margin: 0 0 6px;
+  color: #2f4858;
+}
+
+.home-card p {
+  margin: 0;
+  color: #8a97a0;
+  font-size: 14px;
+}
+
+.home-card .arrow {
+  color: #2d6a8f;
+  font-size: 14px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.group-layout {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.group-main {
+  flex: 2 1 380px;
+  min-width: 0;
+}
+
+.group-side {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.group-main > h2:first-child,
+.group-side > h2:first-child {
+  margin-top: 0;
+}
+
+.group-side h2 {
+  font-size: 16px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #d3dbe0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.list li {
+  padding: 13px 16px;
+  border-bottom: 1px solid #e7ecef;
+}
+
+.list li:last-child {
+  border-bottom: none;
+}
+
+.list a {
+  color: #2d6a8f;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.list a:hover {
+  text-decoration: underline;
+}
+
+.list .meta {
+  color: #8a97a0;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.list form.inline {
+  margin-top: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  max-width: 420px;
+  padding: 9px 11px;
+  border: 1px solid #c9d2d8;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+button {
+  background: #2f4858;
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3b5a6e;
+}
+
+button.secondary {
+  background: #fff;
+  color: #2f4858;
+  border: 1px solid #c9d2d8;
+}
+
+button.secondary:hover {
+  background: #f0f4f6;
+}
+
+.notice {
+  background: #e4f1e8;
+  border: 1px solid #b5d9c2;
+  color: #2f6a45;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin: 14px 0;
+}
+
+.error {
+  background: #fbe6e6;
+  border: 1px solid #e2b5b5;
+  color: #8f2d2d;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin: 14px 0;
+}
+
+.badge {
+  display: inline-block;
+  background: #dbe4ea;
+  color: #2f4858;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.post {
+  background: #fff;
+  border: 1px solid #d3dbe0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.post .meta {
+  color: #8a97a0;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.site-footer {
+  background: #2f4858;
+  color: #9fb2be;
+  text-align: center;
+  font-size: 13px;
+  padding: 18px 20px;
+}
+
+.site-footer a {
+  color: #cdd9e0;
+}

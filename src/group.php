@@ -166,97 +166,103 @@ $topics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $pageTitle = $membership['name'];
 require 'header.php';
 ?>
-    <h1><?= e($membership['name']) ?></h1>
-    <p><?= e($membership['description'] ?? '') ?></p>
-    <p>Din roll: <strong><?= e($membership['role']) ?></strong></p>
+    <div class="card">
+        <h1><?= e($membership['name']) ?></h1>
+        <p><?= e($membership['description'] ?? '') ?></p>
+        <p>Din roll: <span class="badge"><?= e($membership['role']) ?></span></p>
+    </div>
 
-    <?php if ($notice): ?>
-        <p style="color:green;"><?= e($notice) ?></p>
-    <?php endif; ?>
+    <?php if ($notice): ?><p class="notice"><?= e($notice) ?></p><?php endif; ?>
 
-    <?php if ($isAdmin): ?>
-        <h2>Väntande ansökningar</h2>
-        <?php if (!$pending): ?>
-            <p>Inga väntande ansökningar just nu.</p>
-        <?php else: ?>
-            <ul>
-            <?php foreach ($pending as $p): ?>
-                <li>
-                    <?= e($p['first_name'] . ' ' . $p['last_name']) ?>
-                    (<?= e($p['email']) ?>)
+    <div class="group-layout">
+        <div class="group-main">
+            <h2>Diskussioner</h2>
+            <?php if (!$topics): ?>
+                <p>Inga diskussioner än. Starta den första!</p>
+            <?php else: ?>
+                <ul class="list">
+                <?php foreach ($topics as $t): ?>
+                    <li>
+                        <a href="topic.php?id=<?= (int)$t['id'] ?>"><?= e($t['title']) ?></a>
+                        <div class="meta">startad av <?= e($t['first_name'] . ' ' . $t['last_name']) ?></div>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
 
-                    <form method="post" style="display:inline;">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="form_type" value="application">
-                        <input type="hidden" name="applicant_id" value="<?= (int)$p['id'] ?>">
-                        <button type="submit" name="action" value="approve">Godkänn</button>
-                        <button type="submit" name="action" value="reject">Neka</button>
-                    </form>
-                </li>
-            <?php endforeach; ?>
-            </ul>
+            <h3>Starta ny diskussion</h3>
+            <div class="card">
+                <form method="post">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="form_type" value="new_topic">
+                    <p><input type="text" name="title" placeholder="Ämne"></p>
+                    <p><textarea name="body" placeholder="Ditt första inlägg"></textarea></p>
+                    <p><button type="submit">Skapa diskussion</button></p>
+                </form>
+            </div>
+        </div>
+
+        <?php if ($isAdmin): ?>
+        <aside class="group-side">
+            <h2>Väntande ansökningar</h2>
+            <?php if (!$pending): ?>
+                <p>Inga väntande ansökningar just nu.</p>
+            <?php else: ?>
+                <ul class="list">
+                <?php foreach ($pending as $p): ?>
+                    <li>
+                        <strong><?= e($p['first_name'] . ' ' . $p['last_name']) ?></strong>
+                        <div class="meta"><?= e($p['email']) ?></div>
+                        <form method="post" class="inline">
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="form_type" value="application">
+                            <input type="hidden" name="applicant_id" value="<?= (int)$p['id'] ?>">
+                            <button type="submit" name="action" value="approve">Godkänn</button>
+                            <button type="submit" name="action" value="reject" class="secondary">Neka</button>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+            <h2>Medlemmar</h2>
+            <?php if (!$members): ?>
+                <p>Du är ensam medlem så länge.</p>
+            <?php else: ?>
+                <ul class="list">
+                <?php foreach ($members as $m): ?>
+                    <li>
+                        <strong><?= e($m['first_name'] . ' ' . $m['last_name']) ?></strong>
+                        <span class="badge"><?= e($m['role']) ?></span>
+                        <form method="post" class="inline">
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="form_type" value="role_change">
+                            <input type="hidden" name="target_id" value="<?= (int)$m['id'] ?>">
+                            <?php if ($m['role'] === 'admin'): ?>
+                                <button type="submit" name="new_role" value="member" class="secondary">Gör till medlem</button>
+                            <?php else: ?>
+                                <button type="submit" name="new_role" value="admin">Gör till admin</button>
+                            <?php endif; ?>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+            <h2>Inbjudningslänk</h2>
+            <div class="card">
+                <form method="post">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="form_type" value="create_invite">
+                    <button type="submit">Skapa engångslänk (giltig 24h)</button>
+                </form>
+                <?php if (!empty($inviteLink)): ?>
+                    <p class="meta" style="margin-top:12px;">Kopiera och dela denna länk:</p>
+                    <input type="text" value="<?= e($inviteLink) ?>" readonly
+                           style="max-width:100%;" onclick="this.select()">
+                <?php endif; ?>
+            </div>
+        </aside>
         <?php endif; ?>
-
-        <h2>Medlemmar</h2>
-        <?php if (!$members): ?>
-            <p>Du är ensam medlem så länge.</p>
-        <?php else: ?>
-            <ul>
-            <?php foreach ($members as $m): ?>
-                <li>
-                    <?= e($m['first_name'] . ' ' . $m['last_name']) ?>
-                    — <strong><?= e($m['role']) ?></strong>
-
-                    <form method="post" style="display:inline;">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="form_type" value="role_change">
-                        <input type="hidden" name="target_id" value="<?= (int)$m['id'] ?>">
-                        <?php if ($m['role'] === 'admin'): ?>
-                            <button type="submit" name="new_role" value="member">Gör till medlem</button>
-                        <?php else: ?>
-                            <button type="submit" name="new_role" value="admin">Gör till admin</button>
-                        <?php endif; ?>
-                    </form>
-                </li>
-            <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-
-        <h2>Inbjudningslänk</h2>
-        <form method="post">
-            <?= csrf_field() ?>
-            <input type="hidden" name="form_type" value="create_invite">
-            <button type="submit">Skapa engångslänk (giltig 24h)</button>
-        </form>
-
-        <?php if(!empty($inviteLink)): ?>
-            <p>Kopiera och dela denna länk: </p>
-            <input type="text" value="<?= e($inviteLink) ?>" readonly
-            style="width:100%; max-width:600px;" onclick="this.select()">
-        <?php endif; ?>
-    <?php endif; ?>
-
-    <h2>Diskussioner</h2>
-
-    <?php if (!$topics): ?>
-        <p>Inga diskussioner än. Starta den första!</p>
-    <?php else: ?>
-        <ul>
-        <?php foreach ($topics as $t): ?>
-            <li>
-                <a href="topic.php?id=<?= (int)$t['id'] ?>"><?= e($t['title']) ?></a>
-                <small>— startad av <?= e($t['first_name'] . ' ' . $t['last_name']) ?></small>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-
-    <h3>Starta ny diskussion</h3>
-    <form method="post">
-        <?= csrf_field() ?>
-        <input type="hidden" name="form_type" value="new_topic">
-        <p><input type="text" name="title" placeholder="Ämne"></p>
-        <p><textarea name="body" placeholder="Ditt första inlägg"></textarea></p>
-        <p><button type="submit">Skapa diskussion</button></p>
-    </form>
+    </div>
 <?php require 'footer.php'; ?>

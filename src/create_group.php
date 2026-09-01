@@ -44,12 +44,14 @@ $pageTitle = 'Skapa grupp';
 require 'header.php';
 ?>
     <h1>Skapa en ny grupp</h1>
-    <?php if ($error): ?><p style="color:red;"><?= e($error) ?></p><?php endif; ?>
+    <?php if ($error): ?><p class="error"><?= e($error) ?></p><?php endif; ?>
     
-    <form method="post">
-        <?= csrf_field() ?>
-        <p><input type="text" name="name" placeholder="Gruppens namn"></p>
-        <p><textarea name="description" placeholder="Vad diskuteras i gruppen?"></textarea></p>
-        <p><button type="submit">Skapa grupp</button></p>
-    </form>
+    <div class="card">
+        <form method="post">
+            <?= csrf_field() ?>
+            <p><input type="text" name="name" placeholder="Gruppens namn"></p>
+            <p><textarea name="description" placeholder="Vad diskuteras i gruppen?"></textarea></p>
+            <p><button type="submit">Skapa grupp</button></p>
+        </form>
+    </div>
 <?php require 'footer.php'; ?>

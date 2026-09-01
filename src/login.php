@@ -30,15 +30,17 @@ require 'header.php';
 ?>
     <h1>Logga in</h1>
 
-    <?php if ($notice): ?><p style="color:green;"><?= e($notice) ?></p><?php endif; ?>
-    <?php if ($error): ?><p style="color:red;"><?= e($error) ?></p><?php endif; ?>
-
+    <?php if ($notice): ?><p class="notice"><?= e($notice) ?></p><?php endif; ?>
+    <?php if ($error): ?><p class="error"><?= e($error) ?></p><?php endif; ?>
+    
+    <div class="card">
         <form method="post">
-        <?= csrf_field() ?>
-        <p><input type="email" name="email" placeholder="E-post"></p>
-        <p><input type="password" name="password" placeholder="Lösenord"></p>
-        <p><button type="submit">Logga in</button></p>
-    </form>
+            <?= csrf_field() ?>
+            <p><input type="email" name="email" placeholder="E-post"></p>
+            <p><input type="password" name="password" placeholder="Lösenord"></p>
+            <p><button type="submit">Logga in</button></p>
+        </form>
+    </div>
 
     <p>Inget konto? <a href="register.php">Skapa ett här</a></p>
 <?php require 'footer.php'; ?>

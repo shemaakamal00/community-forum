@@ -42,16 +42,12 @@ if ($_SERVER ['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Skapa konto'; 
 require 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-    <head><meta charset="UTF-8"><title>Skapa konto</title></head>
-    <body>
         <h1>Skapa konto</h1>
 
         <?php if ($error): ?>
-            <p style="color:red;"><?= e($error) ?></p>
-            <?php endif; ?>
-
+            <p class="error"><?= e($error) ?></p><?php endif; ?>
+           
+        <div class="card">
             <form method="post">
                 <?= csrf_field() ?>
                 <p><input type="text" name="first_name" placeholder="Förnamn"></p>
@@ -60,6 +56,7 @@ require 'header.php';
                 <p><input type="password" name="password" placeholder="Lösenord (minst 8 tecken)"></p>
                 <p><button type="submit">Registrera</button></p>
             </form>
+        </div>
 
             <p>Har du redan ett konto? <a href="login.php">Logga in</a></p>
 <?php require 'footer.php'; ?>

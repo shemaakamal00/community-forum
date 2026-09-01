@@ -37,14 +37,18 @@ function nav(): string {
 
     $name = e($_SESSION['user_name'] ?? '');
     return <<<HTML
-<nav style="margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid #ccc;">
-    <a href="index.php">Hem</a> |
-    <a href="groups.php">Grupper</a> |
-    <a href="create_group.php">Skapa grupp</a>
-    <span style="float:right;">
-        Inloggad som {$name} &middot;
-        <a href="logout.php">Logga ut</a>
-    </span>
+<nav class="topbar">
+    <div class="nav-inner">
+        <span class="brand"><a href="index.php">Forum</a></span>
+        <span class="nav-links">
+            <a href="index.php">Hem</a>
+            <a href="groups.php">Grupper</a>
+            <a href="create_group.php">Skapa grupp</a>
+        </span>
+        <span class="right">
+            Inloggad som {$name} &middot; <a href="logout.php">Logga ut</a>
+        </span>
+    </div>
 </nav>
 HTML;
 }

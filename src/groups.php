@@ -55,18 +55,18 @@ require 'header.php';
 ?>
     <h1>Grupper</h1>
 
-    <?php if ($notice): ?><p style="color:green;"><?= e($notice) ?></p><?php endif; ?>
+    <?php if ($notice): ?><p class="notice""><?= e($notice) ?></p><?php endif; ?>
 
     <h2>Mina grupper</h2>
     <?php if (!$myGroups): ?>
         <p>Du är inte medlem i någon grupp än.</p>
     <?php else: ?>
-        <ul>
+        <ul class="list">
         <?php foreach ($myGroups as $g): ?>
             <li>
                 <a href="group.php?id=<?= (int)$g['id'] ?>"><?= e($g['name']) ?></a>
                 <?php if ($g['role'] === 'admin'): ?>
-                    <strong>(admin)</strong>
+                    <span class="badge">(admin)</span >
                 <?php endif; ?>
             </li>
         <?php endforeach; ?>
@@ -76,14 +76,16 @@ require 'header.php';
     <h2>Andra grupper</h2>
     <?php if (!$otherGroups && !$pendingGroups): ?>
         <p>Det finns inga andra grupper just nu.</p>
-    <?php endif; ?>
+    <?php else: ?>
 
-    <ul>
+    <ul class="list">
     <?php foreach ($otherGroups as $g): ?>
         <li>
             <strong><?= e($g['name']) ?></strong>
-            — <?= e($g['description'] ?? '') ?>
-            <form method="post" style="display:inline;">
+            <?php if (!empty($g['description'])): ?>
+                <div class="meta"><?=  e($g['description']) ?></div>
+            <?php endif; ?>
+            <form method="post" class="inline">
                 <?= csrf_field() ?>
                 <input type="hidden" name="group_id" value="<?= (int)$g['id'] ?>">
                 <button type="submit">Ansök om att gå med</button>
@@ -92,7 +94,11 @@ require 'header.php';
     <?php endforeach; ?>
 
     <?php foreach ($pendingGroups as $g): ?>
-        <li><strong><?= e($g['name']) ?></strong> — <em>ansökan väntar på godkännande</em></li>
+        <li>
+            <strong><?= e($g['name']) ?></strong>
+            <div class="meta">Ansökan väntar på godkännande</div>
+        </li>
     <?php endforeach; ?>
     </ul>
+    <?php endif; ?>
 <?php require 'footer.php'; ?>
