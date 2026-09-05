@@ -39,9 +39,8 @@ function nav(): string {
     return <<<HTML
 <nav class="topbar">
     <div class="nav-inner">
-        <span class="brand"><a href="index.php">Forum</a></span>
+        <span class="brand"><a href="index.php">MötesPlatsen</a></span>
         <span class="nav-links">
-            <a href="index.php">Hem</a>
             <a href="groups.php">Grupper</a>
             <a href="create_group.php">Skapa grupp</a>
         </span>

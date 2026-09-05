@@ -87,7 +87,7 @@ require 'header.php';
     <div class="card">
         <form method="post">
             <?= csrf_field() ?>
-            <p><textarea name="body" placeholder="Skriv ett svar"></textarea></p>
+            <p><textarea name="body" placeholder="Skriv ett svar" required></textarea></p>
             <p><button type="submit">Skicka svar</button></p>
         </form>
     </div>

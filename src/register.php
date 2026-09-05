@@ -50,10 +50,10 @@ require 'header.php';
         <div class="card">
             <form method="post">
                 <?= csrf_field() ?>
-                <p><input type="text" name="first_name" placeholder="Förnamn"></p>
-                <p><input type="text" name="last_name" placeholder="Efternamn"></p>
-                <p><input type="email" name="email" placeholder="E-post"></p>
-                <p><input type="password" name="password" placeholder="Lösenord (minst 8 tecken)"></p>
+                <p><input type="text" name="first_name" placeholder="Förnamn" required maxlength="100"></p>
+                <p><input type="text" name="last_name" placeholder="Efternamn" required maxlength="100"></p>
+                <p><input type="email" name="email" placeholder="E-post" required maxlength="255"></p>
+                <p><input type="password" name="password" placeholder="Lösenord (minst 8 tecken)" required minlength="8"></p>
                 <p><button type="submit">Registrera</button></p>
             </form>
         </div>

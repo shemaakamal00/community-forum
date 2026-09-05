@@ -195,8 +195,8 @@ require 'header.php';
                 <form method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" name="form_type" value="new_topic">
-                    <p><input type="text" name="title" placeholder="Ämne"></p>
-                    <p><textarea name="body" placeholder="Ditt första inlägg"></textarea></p>
+                    <p><input type="text" name="title" placeholder="Ämne" required maxlength="255"></p>
+                    <p><textarea name="body" placeholder="Ditt första inlägg" required></textarea></p>
                     <p><button type="submit">Skapa diskussion</button></p>
                 </form>
             </div>

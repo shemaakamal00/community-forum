@@ -14,5 +14,6 @@ try {
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 } catch (PDOException $e) {
-    die("Databasfel: " . $e->getMessage());
+    error_log("Databas fel: " . $e->getMessage());
+    die("Ett tekniskt fel har inträffat. Vänligen försök igen senare.");
 }

@@ -36,8 +36,8 @@ require 'header.php';
     <div class="card">
         <form method="post">
             <?= csrf_field() ?>
-            <p><input type="email" name="email" placeholder="E-post"></p>
-            <p><input type="password" name="password" placeholder="Lösenord"></p>
+            <p><input type="email" name="email" placeholder="E-post" required></p>
+            <p><input type="password" name="password" placeholder="Lösenord" required></p>
             <p><button type="submit">Logga in</button></p>
         </form>
     </div>

@@ -1,5 +1,5 @@
 <?php
-$pageTitle = $pageTitle ?? 'Forum';
+$pageTitle = $pageTitle ?? 'MötesPlatsen';
 ?>
 <!DOCTYPE html>
 <html lang="sv">

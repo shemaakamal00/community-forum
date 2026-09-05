@@ -49,7 +49,7 @@ require 'header.php';
     <div class="card">
         <form method="post">
             <?= csrf_field() ?>
-            <p><input type="text" name="name" placeholder="Gruppens namn"></p>
+            <p><input type="text" name="name" placeholder="Gruppens namn" required maxlength="150"></p>
             <p><textarea name="description" placeholder="Vad diskuteras i gruppen?"></textarea></p>
             <p><button type="submit">Skapa grupp</button></p>
         </form>

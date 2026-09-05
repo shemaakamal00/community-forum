@@ -43,7 +43,8 @@ $pendingGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->prepare(
     "SELECT g.id, g.name, g.description FROM `groups` g
      WHERE g.id NOT IN (
-         SELECT group_id FROM memberships WHERE user_id = ?
+         SELECT group_id FROM memberships WHERE user_id = ? 
+         AND status IN ('approved')
      )
      ORDER BY g.name"
 );
@@ -55,7 +56,7 @@ require 'header.php';
 ?>
     <h1>Grupper</h1>
 
-    <?php if ($notice): ?><p class="notice""><?= e($notice) ?></p><?php endif; ?>
+    <?php if ($notice): ?><p class="notice"><?= e($notice) ?></p><?php endif; ?>
 
     <h2>Mina grupper</h2>
     <?php if (!$myGroups): ?>
@@ -66,7 +67,7 @@ require 'header.php';
             <li>
                 <a href="group.php?id=<?= (int)$g['id'] ?>"><?= e($g['name']) ?></a>
                 <?php if ($g['role'] === 'admin'): ?>
-                    <span class="badge">(admin)</span >
+                    <span class="badge">(admin)</span>
                 <?php endif; ?>
             </li>
         <?php endforeach; ?>
